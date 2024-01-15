@@ -1,0 +1,89 @@
+basePath: api/v1
+info:
+  contact:
+    email: jr@live.at
+    name: Paulo Ferreira
+  description: The NumericTypeService API categorizes and manages numeric values.
+    The RESTful endpoints allow clients to store, retrieve, and query numeric values
+    in memory.
+  title: Numeric Type API
+  version: "1.0"
+paths:
+  /number:
+    get:
+      description: Retrieve information for all numbers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved all numbers
+          schema:
+            items:
+              type: string
+            type: array
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get all numbers
+    post:
+      consumes:
+      - application/json
+      description: Save a number to the collection
+      parameters:
+      - description: Number to be saved
+        format: number
+        in: body
+        name: number
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Number saved successfully
+          schema:
+            type: object
+        "400":
+          description: Failed to parse request body, number not found or not a valid
+            string in the JSON body, or invalid number format
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Save number
+  /number/{number}:
+    get:
+      description: Retrieve information for a specific number
+      parameters:
+      - description: Number to retrieve information for
+        format: number
+        in: path
+        name: number
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved number information
+          schema:
+            type: object
+        "400":
+          description: Invalid number format in the URL or number not found in the
+            URL
+          schema:
+            type: string
+        "404":
+          description: Number not found
+          schema:
+            type: string
+        "500":
+          description: Internal server error
+          schema:
+            type: string
+      summary: Get number information
+swagger: "2.0"
